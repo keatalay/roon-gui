@@ -1,4 +1,20 @@
+# Rust
 /target
+src-tauri/target
+
+# Node
+node_modules
+dist
+
+# IDE
 /.vscode
+.idea
+
+# App config/logs
 config.json
 roon-tui.log
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

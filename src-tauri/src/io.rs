@@ -1,20 +1,21 @@
-use crossterm::event::KeyEvent;
-use roon_api::{browse, transport::{QueueItem, QueueChange, Zone, ZoneSeek, volume, Control}};
+use roon_api::{
+    browse,
+    transport::{QueueChange, QueueItem, Zone, ZoneSeek, volume, Control},
+};
 use serde::{Deserialize, Serialize};
-
-pub mod events;
-pub mod roon;
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "snake_case")]
 pub enum QueueMode {
-    #[default] Manual = 0,
+    #[default]
+    Manual = 0,
     RoonRadio = 1,
     RandomAlbum = 2,
     RandomTrack = 3,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(tag = "type", content = "id")]
 pub enum EndPoint {
     Zone(String),
     Output(String),
@@ -23,8 +24,6 @@ pub enum EndPoint {
 
 #[derive(Debug)]
 pub enum IoEvent {
-    Input(KeyEvent),
-    Redraw,
     CoreName(Option<String>),
     BrowseTitle(String),
     BrowseList(usize, Vec<browse::Item>),
